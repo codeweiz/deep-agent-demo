@@ -7,3 +7,7 @@ base_url = "https://api.deepseek.com"
 [search]
 provider = "tavily"
 api_key = ""
+
+[langsmith]
+tracing = false
+api_key = ""

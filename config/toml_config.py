@@ -1,3 +1,5 @@
+import os
+
 from pydantic import BaseModel, Field
 
 
@@ -21,12 +23,22 @@ class SearchConfig(BaseModel):
     api_key: str = Field(default="", description="API KEY")
 
 
+class LangSmithConfig(BaseModel):
+    """LangSmith 追踪配置"""
+
+    tracing: bool = Field(default=False, description="是否启用追踪")
+
+    api_key: str = Field(default="", description="API KEY")
+
+
 class TomlConfig(BaseModel):
     """Toml 配置"""
 
     llm_config: LlmConfig = Field(default_factory=LlmConfig, description="大语言模型配置")
 
     search_config: SearchConfig = Field(default_factory=SearchConfig, description="搜索配置")
+
+    langsmith_config: LangSmithConfig = Field(default_factory=LangSmithConfig, description="LangSmith 追踪配置")
 
 
 def load_toml_config(file_path: str = ".config.toml") -> TomlConfig:
@@ -48,7 +60,12 @@ def load_toml_config(file_path: str = ".config.toml") -> TomlConfig:
     return TomlConfig(
         llm_config=LlmConfig(**toml_data.get("llm")),
         search_config=SearchConfig(**toml_data.get("search")),
+        langsmith_config=LangSmithConfig(**toml_data.get("langsmith")),
     )
 
 
 TOML_CONFIG = load_toml_config()
+
+if TOML_CONFIG.langsmith_config.tracing:
+    os.environ["LANGSMITH_TRACING"] = "true"
+    os.environ["LANGSMITH_API_KEY"] = TOML_CONFIG.langsmith_config.api_key

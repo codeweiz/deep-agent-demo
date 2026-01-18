@@ -1,4 +1,11 @@
-from config import TOML_CONFIG
+from agent.internet_search_agent import internet_search_agent
 
 if __name__ == '__main__':
-    print(TOML_CONFIG)
+    result = internet_search_agent.invoke({
+        "messages": [
+            {"role": "user", "content": "What is deepagents?"}
+        ]
+    })
+
+    # Print the agent's response
+    print(result["messages"][-1].content)

@@ -5,6 +5,8 @@ description = "Add your description here"
 requires-python = ">=3.11"
 dependencies = [
     "deepagents>=0.3.6",
+    "langchain-deepseek>=1.0.1",
+    "langsmith>=0.6.4",
     "pydantic>=2.12.5",
     "tavily-python>=0.7.19",
     "tomli>=2.4.0",
