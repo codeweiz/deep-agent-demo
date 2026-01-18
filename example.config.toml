@@ -1,0 +1,9 @@
+[llm]
+provider = "deepseek"
+model = "deepseek-chat"
+api_key = ""
+base_url = "https://api.deepseek.com"
+
+[search]
+provider = "tavily"
+api_key = ""
